@@ -65,7 +65,6 @@ var (
 	pbModelDataFlags arrayFlags
 	pathTarget       = flag.String("xpath_target", "CONFIG_DB", "name of the target for which the path is a member")
 	targetAddr       = flag.String("target_addr", "localhost:10161", "The target address in the format of host:port")
-	targetName       = flag.String("target_name", "hostname.com", "The target name use to verify the hostname returned by TLS handshake")
 	timeOut          = flag.Duration("time_out", 10*time.Second, "Timeout for the Get request, 10 seconds by default")
 	encodingName     = flag.String("encoding", "JSON_IETF", "value encoding format to be used")
 )
