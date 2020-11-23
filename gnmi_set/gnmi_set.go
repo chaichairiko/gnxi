@@ -59,7 +59,7 @@ func buildPbUpdateList(pathValuePairs []string) []*pb.Update {
 	var pbUpdateList []*pb.Update
 	for _, item := range pathValuePairs {
 		lastInd := strings.LastIndex(item, ":")
-		path := item[:lastInd]) 
+		path := item[:lastInd]
 		data := item[lastInd+1:]
 // 		pathValuePair := strings.SplitN(item, ":", 2)
 // 		// TODO (leguo): check if any path attribute contains ':'
