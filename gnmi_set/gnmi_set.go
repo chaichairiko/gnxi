@@ -29,9 +29,9 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	"github.com/google/gnxi/utils"
-	"github.com/google/gnxi/utils/credentials"
-	"github.com/google/gnxi/utils/xpath"
+	"github.com/chaichairiko/gnxi/utils"
+	"github.com/chaichairiko/gnxi/utils/credentials"
+	"github.com/chaichairiko/gnxi/utils/xpath"
 
 	pb "github.com/openconfig/gnmi/proto/gnmi"
 )
