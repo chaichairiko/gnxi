@@ -30,8 +30,8 @@ import (
 	"google.golang.org/grpc"
 
 	"github.com/chaichairiko/gnxi/utils"
-	"github.com/chaichairiko/gnxi/utils/credentials"
-	"github.com/chaichairiko/gnxi/utils/xpath"
+	"github.com/google/gnxi/utils/credentials"
+	"github.com/google/gnxi/utils/xpath"
 
 	pb "github.com/openconfig/gnmi/proto/gnmi"
 )
