@@ -58,18 +58,21 @@ var (
 func buildPbUpdateList(pathValuePairs []string) []*pb.Update {
 	var pbUpdateList []*pb.Update
 	for _, item := range pathValuePairs {
-		pathValuePair := strings.SplitN(item, ":", 2)
-		// TODO (leguo): check if any path attribute contains ':'
-		if len(pathValuePair) != 2 || len(pathValuePair[1]) == 0 {
-			log.Exitf("invalid path-value pair: %v", item)
-		}
-		pbPath, err := xpath.ToGNMIPath(pathValuePair[0])
+		lastInd := strings.LastIndex(x, ":")
+		path := item[:lastInd]) 
+		data := item[lastInd+1:]
+// 		pathValuePair := strings.SplitN(item, ":", 2)
+// 		// TODO (leguo): check if any path attribute contains ':'
+// 		if len(pathValuePair) != 2 || len(pathValuePair[1]) == 0 {
+// 			log.Exitf("invalid path-value pair: %v", item)
+// 		}
+		pbPath, err := xpath.ToGNMIPath(path)
 		if err != nil {
-			log.Exitf("error in parsing xpath %q to gnmi path", pathValuePair[0])
+			log.Exitf("error in parsing xpath %q to gnmi path", path)
 		}
 		var pbVal *pb.TypedValue
-		if pathValuePair[1][0] == '@' {
-			jsonFile := pathValuePair[1][1:]
+		if data[0] == '@' {
+			jsonFile := data[1:]
 			jsonConfig, err := ioutil.ReadFile(jsonFile)
 			if err != nil {
 				log.Exitf("cannot read data from file %v", jsonFile)
@@ -81,26 +84,26 @@ func buildPbUpdateList(pathValuePairs []string) []*pb.Update {
 				},
 			}
 		} else {
-			if strVal, err := strconv.Unquote(pathValuePair[1]); err == nil {
+			if strVal, err := strconv.Unquote(data); err == nil {
 				pbVal = &pb.TypedValue{
 					Value: &pb.TypedValue_StringVal{
 						StringVal: strVal,
 					},
 				}
 			} else {
-				if intVal, err := strconv.ParseInt(pathValuePair[1], 10, 64); err == nil {
+				if intVal, err := strconv.ParseInt(data, 10, 64); err == nil {
 					pbVal = &pb.TypedValue{
 						Value: &pb.TypedValue_IntVal{
 							IntVal: intVal,
 						},
 					}
-				} else if floatVal, err := strconv.ParseFloat(pathValuePair[1], 32); err == nil {
+				} else if floatVal, err := strconv.ParseFloat(data, 32); err == nil {
 					pbVal = &pb.TypedValue{
 						Value: &pb.TypedValue_FloatVal{
 							FloatVal: float32(floatVal),
 						},
 					}
-				} else if boolVal, err := strconv.ParseBool(pathValuePair[1]); err == nil {
+				} else if boolVal, err := strconv.ParseBool(data); err == nil {
 					pbVal = &pb.TypedValue{
 						Value: &pb.TypedValue_BoolVal{
 							BoolVal: boolVal,
@@ -109,7 +112,7 @@ func buildPbUpdateList(pathValuePairs []string) []*pb.Update {
 				} else {
 					pbVal = &pb.TypedValue{
 						Value: &pb.TypedValue_StringVal{
-							StringVal: pathValuePair[1],
+							StringVal: data,
 						},
 					}
 				}
